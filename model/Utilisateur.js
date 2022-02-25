@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose') ;
 
 const UtilisateurSchema = new mongoose.Schema({
     "pseudo": {
@@ -25,4 +25,4 @@ const UtilisateurSchema = new mongoose.Schema({
 
 const Utilisateur = mongoose.model("utilisateurs", UtilisateurSchema);
 
-export default Utilisateur ;
+module.exports = Utilisateur ;

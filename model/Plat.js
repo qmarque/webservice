@@ -1,4 +1,4 @@
-import mongoose from 'mongoose' ;
+const mongoose = require('mongoose') ;
 
 const PlatSchema = new mongoose.Schema({
     "auteur": {
@@ -15,7 +15,7 @@ const PlatSchema = new mongoose.Schema({
     },
     "saison":{
         type: String,
-        required: true ;
+        required: true
     },
     "etapes":{
         type: [String],
@@ -45,4 +45,4 @@ const PlatSchema = new mongoose.Schema({
 
 const Plat = mongoose.model("plats", PlatSchema);
 
-export default Plat ;
+module.exports = Plat ;
