@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();
-require('./modeles/dbConfig');
-const utilisateursRoutes = require('./routes/utilisateursControleur');
-const platsRoutes = require('./routes/platsControleur');
+require('./src/modeles/dbConfig');
+
+const utilisateursRouteur = require('./src/routes/utilisateurs.route');
+const platsRouteur = require('./src/routes/plats.route');
 
 const bodyParser = require('body-parser');
 
+// const auth = require('./src/middleware/auth');
+
 app.use(bodyParser.json());
-app.use('/utilisateurs', utilisateursRoutes);
-app.use('/plats', platsRoutes);
+app.use('/utilisateurs', utilisateursRouteur);
+app.use('/plats', platsRouteur);
 
 app.listen(8080, () => console.log('Server started: 8080'));
