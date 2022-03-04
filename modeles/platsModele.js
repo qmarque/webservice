@@ -6,6 +6,10 @@ const PlatSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        "nom": {
+            type: String,
+            required: true
+        },
         "ingredients": {
             type: [],
             required: true
