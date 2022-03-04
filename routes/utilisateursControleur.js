@@ -7,7 +7,7 @@ const { Utilisateur } = require('../modeles/utilisateursModele');
 
 router.get('/', (req, res) => {
   Utilisateur.find((err, docs) => {
-    if (!err) res.send(docs);
+    if (!err) res.status(200).send(docs);
     else console.log("Error to get data : " + err);
   })
 });
@@ -17,7 +17,7 @@ router.get("/:id", (req, res) => {
   return res.status(404).send("ID unknow : " + req.params.id)
   
   Utilisateur.findById(req.params.id, function(err, docs) {
-    if (!err) res.send(docs);
+    if (!err) res.status(200).send(docs);
     else console.log("Error to get data : " + err);
   })
 });
