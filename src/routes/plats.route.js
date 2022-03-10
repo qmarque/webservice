@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const platsControleur = require('../controleurs/plats.controleur');
+const platsControleur = require("../controleurs/plats.controleur");
 
-router.get('/', platsControleur.get);
+router.get("/", platsControleur.recupererLesPlats);
 
-router.get('/:id', platsControleur.getOne);
-  
-router.post('/', platsControleur.create);
+router.get("/:id", platsControleur.recupererUnPlat);
 
-router.put('/:id', platsControleur.update);
+router.post("/", platsControleur.creerUnPlat);
 
-router.delete('/:id', platsControleur.remove);
+router.put("/:id", platsControleur.modifierUnPlat);
+
+router.delete("/:id", platsControleur.supprimerUnPlat);
 
 module.exports = router;

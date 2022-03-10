@@ -1,50 +1,49 @@
-const plats = require('../services/plats.service');
+const plats = require("../services/plats.service");
 
-async function get(req, res) {
+async function recupererLesPlats(req, res) {
   try {
-      res.status(200).json(await plats.get(req));
+    res.status(200).json(await plats.recupererLesPlats(req));
   } catch (err) {
-      res.status(200).send("none");
+    res.status(200).send("Il n'existe aucun plat");
   }
 }
 
-async function getOne(req, res) {
+async function recupererUnPlat(req, res) {
   try {
-    res.status(200).json(await plats.getOne(req.params.id));
+    res.status(200).json(await plats.recupererUnPlat(req.params.id));
   } catch (err) {
-    return res.status(404).send("ID unknow : " + req.params.id)
+    return res.status(404).send("ID inconnu : " + req.params.id);
   }
 }
 
-async function create(req, res) {
+async function creerUnPlat(req, res) {
   try {
-    res.status(201).json(await plats.create(req.body));
+    res.status(201).json(await plats.creerUnPlat(req.body));
   } catch (err) {
-    return res.status(400).send("Input errors")
+    return res.status(400).send("Erreur lors de la création du plat");
   }
 }
 
-async function update(req, res) {
+async function modifierUnPlat(req, res) {
   try {
-    res.status(200).json(await plats.update(req.params.id, req.body));
+    res.status(200).json(await plats.modifierUnPlat(req.params.id, req.body));
   } catch (err) {
-    return res.status(404).send("ID unknow : " + req.params.id)
+    return res.status(404).send("ID inconnu : " + req.params.id);
   }
 }
 
-async function remove(req, res) {
+async function supprimerUnPlat(req, res) {
   try {
-    res.status(200).json(await plats.remove(req.params.id));
+    res.status(200).json(await plats.supprimerUnPlat(req.params.id));
   } catch (err) {
-    return res.status(404).send("ID unknow : " + req.params.id)
+    return res.status(404).send("ID inconnu : " + req.params.id);
   }
 }
 
 module.exports = {
-  get,
-  getOne,
-  create,
-  update,
-  remove
+  recupererLesPlats,
+  creerUnPlat,
+  modifierUnPlat,
+  supprimerUnPlat,
+  recupererUnPlat,
 };
-

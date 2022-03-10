@@ -1,14 +1,14 @@
 const { Utilisateur } = require("../modeles/utilisateursModele");
 
-async function get() {
+async function recupererLesUtilisateurs() {
   return Utilisateur.find();
 }
 
-async function getOne(id) {
+async function recupererUnUtilisateur(id) {
   return Utilisateur.findById(id);
 }
 
-async function create(utilisateur) {
+async function creerUnUtilisateur(utilisateur) {
   const nouvelUtilisateur = new Utilisateur({
     pseudo: utilisateur.pseudo,
     nom: utilisateur.nom,
@@ -20,7 +20,7 @@ async function create(utilisateur) {
   return nouvelUtilisateur.save();
 }
 
-async function update(id, utilisateur) {
+async function modifierUnUtilisateur(id, utilisateur) {
   const modifierUtilisateur = {
     pseudo: utilisateur.pseudo,
     nom: utilisateur.nom,
@@ -36,11 +36,11 @@ async function update(id, utilisateur) {
   );
 }
 
-async function remove(id) {
+async function supprimerUnUtilisateur(id) {
   return Utilisateur.findByIdAndRemove(id);
 }
 
-async function exist(login, pwd) {
+async function existe(login, pwd) {
   const result = await Utilisateur.findOne({
     pseudo: login,
     mdp: pwd,
@@ -54,10 +54,10 @@ async function exist(login, pwd) {
 }
 
 module.exports = {
-  get,
-  getOne,
-  create,
-  update,
-  remove,
-  exist,
+  creerUnUtilisateur,
+  existe,
+  modifierUnUtilisateur,
+  recupererLesUtilisateurs,
+  recupererUnUtilisateur,
+  supprimerUnUtilisateur,
 };
