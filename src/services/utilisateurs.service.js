@@ -1,4 +1,6 @@
+require('dotenv').config();
 const { Utilisateur } = require("../modeles/utilisateursModele");
+const jwt = require('jsonwebtoken');
 
 async function recupererLesUtilisateurs() {
   return Utilisateur.find();
@@ -40,17 +42,27 @@ async function supprimerUnUtilisateur(id) {
   return Utilisateur.findByIdAndRemove(id);
 }
 
-async function existe(login, pwd) {
+async function existe(utilisateur) {
   const result = await Utilisateur.findOne({
-    pseudo: login,
-    mdp: pwd,
+    pseudo: utilisateur.pseudo,
+    mdp: utilisateur.mdp,
   }).exec();
   if (result != null) {
-    console.log("ok");
+    const token = genererToken(utilisateur);
+    const nouveauToken = genererNouveauToken(utilisateur);
     return {
-      message: "ok",
+      token,
+      nouveauToken,
     };
   }
+}
+
+function genererToken(utilisateur) {
+  return jwt.sign(utilisateur, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1800s' });
+}
+
+function genererNouveauToken(user) {
+  return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '1y'});
 }
 
 module.exports = {

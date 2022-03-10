@@ -12,6 +12,4 @@ router.put("/:id", utilisateursControleur.modifierUnUtilisateur);
 
 router.delete("/:id", utilisateursControleur.supprimerUnUtilisateur);
 
-router.post("/login", utilisateursControleur.connexion);
-
 module.exports = router;
