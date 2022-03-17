@@ -1,7 +1,11 @@
 const { Plat } = require("../modeles/platsModele");
 
-async function recupererLesPlats() {
-  return Plat.find();
+async function recupererLesPlats(req) {
+  if (req.query != null) {
+    return Plat.find(req.query);
+  } else {
+    return Plat.find();
+  }
 }
 
 async function recupererUnPlat(id) {

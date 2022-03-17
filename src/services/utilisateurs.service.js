@@ -6,8 +6,12 @@ const hbs = require("nodemailer-express-handlebars");
 const { Utilisateur } = require("../modeles/utilisateursModele");
 const jwt = require("jsonwebtoken");
 
-async function recupererLesUtilisateurs() {
-  return Utilisateur.find();
+async function recupererLesUtilisateurs(req) {
+  if (req.query != null) {
+    return Utilisateur.find(req.query);
+  } else {
+    return Utilisateur.find();
+  }
 }
 
 async function recupererUnUtilisateur(id) {
