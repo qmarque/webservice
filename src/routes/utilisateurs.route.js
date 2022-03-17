@@ -7,8 +7,6 @@ router.get("/", utilisateursControleur.recupererLesUtilisateurs);
 
 router.get("/:id", utilisateursControleur.recupererUnUtilisateur);
 
-router.post("/", utilisateursControleur.creerUnUtilisateur);
-
 router.put("/:id", utilisateursControleur.modifierUnUtilisateur);
 
 router.delete("/:id", utilisateursControleur.supprimerUnUtilisateur);
