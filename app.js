@@ -10,7 +10,7 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 app.use("/utilisateurs", authentifierToken, utilisateursRouteur);
-app.use("/plats", platsRouteur);
+app.use("/plats", authentifierToken, platsRouteur);
 app.use("", connexionRouteur);
 
 app.listen(8080, () =>
