@@ -4,6 +4,7 @@ const UtilisateurSchema = new mongoose.Schema(
     {
         "pseudo": {
             type: String,
+            unique: true,
             required: true
         },
         "nom": {
@@ -16,6 +17,7 @@ const UtilisateurSchema = new mongoose.Schema(
         },
         "mail": {
             type: String,
+            unique: true,
             required: true
         },
         "mdp": {
