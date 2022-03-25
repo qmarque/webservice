@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 
 async function recupererLesUtilisateurs(req) {
   if (req.query != null) {
-    return Utilisateur.find(req.query);
+    return Utilisateur.find(req.query).limit(req.query.limite);
   } else {
     return Utilisateur.find();
   }

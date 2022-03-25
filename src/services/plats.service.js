@@ -29,12 +29,12 @@ async function recupererLesPlats(req) {
         }
       }
 
-      return Plat.find(parametre);
+      return Plat.find(parametre).limit(req.query.limite);
     } else {
-      return Plat.find(req.query);
+      return Plat.find(req.query).limit(req.query.limite);
     }
   } else {
-    return Plat.find();
+    return Plat.find().limit(req.query.limite);
   }
 }
 
