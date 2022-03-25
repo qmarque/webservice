@@ -8,9 +8,37 @@ const jwt = require("jsonwebtoken");
 
 async function recupererLesUtilisateurs(req) {
   if (req.query != null) {
-    return Utilisateur.find(req.query).limit(req.query.limite);
+    var parametre;
+    for (p in req.query) {
+      if (p.localeCompare("limite") == 0) {
+        var limite = req.query[p];
+      } else if (p.localeCompare("trierPar") == 0) {
+        var tri = req.query[p];
+      } else if (p.localeCompare("ordre") == 0) {
+        var ordre = req.query[p];
+      } else {
+        parametre[p] = req.query[p];
+      }
+    }
+    if (tri && ordre) {
+      if (ordre == "asc") {
+        return Utilisateur.find(parametre)
+          .sort([[tri, 1]])
+          .limit(limite);
+      } else if (ordre == "desc") {
+        return Utilisateur.find(parametre)
+          .sort([[tri, -1]])
+          .limit(limite);
+      }
+    } else {
+      if (typeof parametre !== "undefined") {
+        return Utilisateur.find(parametre).limit(req.query.limite);
+      } else {
+        return Utilisateur.find().limit(req.query.limite);
+      }
+    }
   } else {
-    return Utilisateur.find();
+    return Utilisateur.find().limit(req.query.limite);
   }
 }
 

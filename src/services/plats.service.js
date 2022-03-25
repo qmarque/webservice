@@ -2,39 +2,51 @@ const fetch = require("node-fetch");
 const { Plat } = require("../modeles/platsModele");
 
 async function recupererLesPlats(req) {
-  if (req.query != null) {
-    if (req.query.lat && req.query.lon) {
-      //Appel API
-      const reponse = await fetch(
-        "https://api.openweathermap.org/data/2.5/weather?lat=" +
-          req.query.lat +
-          "&lon=" +
-          req.query.lon +
-          "&appid=9543685ef70ae794d21e49ef00692c0b"
-      );
-      const data = await reponse.json();
+  if (req.query.lat && req.query.lon) {
+    //Appel API
+    const reponse = await fetch(
+      "https://api.openweathermap.org/data/2.5/weather?lat=" +
+        req.query.lat +
+        "&lon=" +
+        req.query.lon +
+        "&appid=9543685ef70ae794d21e49ef00692c0b"
+    );
+    const data = await reponse.json();
 
-      const temp = parseFloat(data.main.temp) - 273.15;
+    const temp = parseFloat(data.main.temp) - 273.15;
 
-      //Requête
-      var parametre = {
-        temperatureMinExt: { $lt: temp },
-        temperatureMaxExt: { $gt: temp },
-      };
-
-      for (p in req.query) {
-        if (p.localeCompare("lat") != 0 && p.localeCompare("lon") != 0) {
-          console.log(p);
-          parametre[p] = req.query[p];
-        }
-      }
-
-      return Plat.find(parametre).limit(req.query.limite);
-    } else {
-      return Plat.find(req.query).limit(req.query.limite);
+    //Requête
+    var parametre = {
+      temperatureMinExt: { $lt: temp },
+      temperatureMaxExt: { $gt: temp },
+    };
+  }
+  var parametre;
+  for (p in req.query) {
+    if (p.localeCompare("limite") == 0) {
+      var limite = req.query[p];
+    } else if (p.localeCompare("trierPar") == 0) {
+      var tri = req.query[p];
+    } else if (p.localeCompare("ordre") == 0) {
+      var ordre = req.query[p];
+    }
+  }
+  if (tri && ordre) {
+    if (ordre == "asc") {
+      return Plat.find(parametre)
+        .sort([[tri, 1]])
+        .limit(limite);
+    } else if (ordre == "desc") {
+      return Plat.find(parametre)
+        .sort([[tri, -1]])
+        .limit(limite);
     }
   } else {
-    return Plat.find().limit(req.query.limite);
+    if (typeof parametre !== "undefined") {
+      return Plat.find().limit(limite);
+    }
+
+    return Plat.find(parametre).limit(req.query.limite);
   }
 }
 
@@ -43,7 +55,6 @@ async function recupererUnPlat(id) {
 }
 
 async function creerUnPlat(plat) {
-  console.log(plat);
   const nouveauPlat = new Plat({
     auteur: plat.auteur,
     nom: plat.nom,
@@ -59,8 +70,6 @@ async function creerUnPlat(plat) {
     tempsCuisson: plat.tempsCuisson,
     tempsTotal: plat.tempsTotal,
   });
-
-  console.log(nouveauPlat);
 
   return nouveauPlat.save();
 }
