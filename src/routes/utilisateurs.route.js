@@ -82,7 +82,7 @@ router.get("/", utilisateursControleur.recupererLesUtilisateurs);
  *              application/json:
  *                  schema:
  *                      $ref: '#/components/schemas/Utilisateur'
- *          400:
+ *          404:
  *            description: L'utilisateur n'a pas été trouvé
  */
 
@@ -116,8 +116,8 @@ router.get("/:id", utilisateursControleur.recupererUnUtilisateur);
  *                          $ref: '#/components/schemas/Utilisateur'
  *            404:
  *              description: L'utilisateur n'a pas été trouvé
- *            500:
- *              description: Des erreurs sont survenues
+ *            400:
+ *              description: Des erreurs de saisies ont été repérées
  */
 
 router.put("/:id", utilisateursControleur.modifierUnUtilisateur);  
