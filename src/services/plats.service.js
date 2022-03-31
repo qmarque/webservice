@@ -21,14 +21,16 @@ async function recupererLesPlats(req) {
       temperatureMaxExt: { $gt: temp },
     };
   }
-  var parametre;
+  var parametre = {};
   for (p in req.query) {
-    if (p.localeCompare("limite") == 0) {
+    if (p == "limite") {
       var limite = req.query[p];
     } else if (p.localeCompare("trierPar") == 0) {
       var tri = req.query[p];
     } else if (p.localeCompare("ordre") == 0) {
       var ordre = req.query[p];
+    } else {
+      parametre[p] = req.query[p];
     }
   }
   if (tri && ordre) {
