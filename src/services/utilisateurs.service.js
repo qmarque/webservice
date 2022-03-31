@@ -129,11 +129,7 @@ async function existe(utilisateur) {
   }).exec();
   if (result != null) {
     const token = genererToken(utilisateur);
-    const nouveauToken = genererNouveauToken(utilisateur);
-    return {
-      token,
-      nouveauToken,
-    };
+    return token;
   }
 }
 
@@ -141,10 +137,6 @@ function genererToken(utilisateur) {
   return jwt.sign(utilisateur, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "1800s",
   });
-}
-
-function genererNouveauToken(user) {
-  return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y" });
 }
 
 module.exports = {
