@@ -2,8 +2,9 @@ const fetch = require("node-fetch");
 const { Plat } = require("../modeles/platsModele");
 
 async function recupererLesPlats(req) {
+  // Si les champs lat et lon sont renseignés en paramètres
   if (req.query.lat && req.query.lon) {
-    //Appel API
+    // Appel API
     const reponse = await fetch(
       "https://api.openweathermap.org/data/2.5/weather?lat=" +
         req.query.lat +
@@ -13,17 +14,24 @@ async function recupererLesPlats(req) {
     );
     const data = await reponse.json();
 
+    // Conversion température de Kelvin à celsius
     const temp = parseFloat(data.main.temp) - 273.15;
 
-    //Requête
+    // Création parametre pour préparer la requête vers la BD
     var parametre = {
       temperatureMinExt: { $lt: temp },
       temperatureMaxExt: { $gt: temp },
     };
   }
-  var parametre = {};
+
+  // Création de parametre si parametre n'existe pas
+  if (typeof parametre !== "undefined") {
+    var parametre = {};
+  }
+
+  // On boucle sur les paramètres rensignés dans la requêtes get
   for (p in req.query) {
-    if (p == "limite") {
+    if (p.localeCompare("limite") == 0) {
       var limite = req.query[p];
     } else if (p.localeCompare("trierPar") == 0) {
       var tri = req.query[p];
@@ -33,6 +41,8 @@ async function recupererLesPlats(req) {
       parametre[p] = req.query[p];
     }
   }
+
+  // Si le tri et l'ordre sont spécifiés dans les paramètres de la requête get, alors on va trier le résultat
   if (tri && ordre) {
     if (ordre == "asc") {
       return Plat.find(parametre)
@@ -44,6 +54,7 @@ async function recupererLesPlats(req) {
         .limit(limite);
     }
   } else {
+    // Si parametre existe, alors on prend en compte les paramètres pour le résultat
     if (typeof parametre !== "undefined") {
       return Plat.find(parametre).limit(limite);
     }
