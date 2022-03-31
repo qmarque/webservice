@@ -45,10 +45,10 @@ async function recupererLesPlats(req) {
     }
   } else {
     if (typeof parametre !== "undefined") {
-      return Plat.find().limit(limite);
+      return Plat.find(parametre).limit(limite);
     }
 
-    return Plat.find(parametre).limit(req.query.limite);
+    return Plat.find().limit(req.query.limite);
   }
 }
 
