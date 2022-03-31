@@ -32,13 +32,18 @@ async function recupererLesUtilisateurs(req) {
       }
     } else {
       if (typeof parametre !== "undefined") {
-        return Utilisateur.find(parametre).limit(req.query.limite);
+        var reponse = Utilisateur.find(parametre).limit(req.query.limite);
+
+        return reponse.select("pseudo nom prenom mail");
       } else {
-        return Utilisateur.find().limit(req.query.limite);
+        var reponse = Utilisateur.find().limit(req.query.limite);
+
+        return reponse.select("pseudo nom prenom mail");
       }
     }
   } else {
-    return Utilisateur.find().limit(req.query.limite);
+    var reponse = Utilisateur.find().limit(req.query.limite);
+    return reponse.select("pseudo nom prenom mail");
   }
 }
 
