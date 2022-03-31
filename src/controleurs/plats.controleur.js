@@ -4,7 +4,7 @@ async function recupererLesPlats(req, res) {
   try {
     res.status(200).json(await plats.recupererLesPlats(req));
   } catch (err) {
-    res.status(400).send("Il n'existe aucun plat");
+    res.status(200).send("Il n'existe aucun plat");
   }
 }
 
